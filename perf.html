@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Perfusion Calculations</title>
+    <style>
+        body {
+            background-color: lightgrey;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 10px;
+            font-size:24px;
+            margin-bottom: 02px;
+           
+        }
+
+        h4 {
+            text-align: center;
+            margin-bottom: 20px;
+            margin-top: 0px;
+            font-color: blue;
+            font-size:15px;
+        }
+
+        fieldset {
+            text-align: left;
+            margin: 0 auto ;
+            width: 50%;
+            padding: 20px;
+            background-color: lightblue;
+            border: 5px solid white;
+      
+        }
+       
+       input[type="checkbox"]
+       {
+            vertical-align: middle;
+            width:10%;
+        }
+
+        
+
+        button:hover {
+            background-color: black;
+        }
+
+        ul {
+            font-size: 15px;
+            padding: 0;
+            line-height: 1;
+        }
+
+        ol
+       { 
+          margin: 5px;
+         line-height:2;
+       }
+       button
+         {
+            display: block;
+            margin: 15px auto;
+            background-color: black;
+            color: white;
+            padding: 20px, 20px;
+            border: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius:5px;
+            
+         }
+        #results {
+            text-align: left;
+            margin: 5px auto;
+            width: 60%;
+            padding: 10px;
+            background-color: lavender;
+            border: 5px solid white;
+            
+        }
+       table {
+         display:block;
+         text-align:center;
+         margin:0 auto;
+         
+       }
+
+        
+    </style>
+</head>
+<body>
+    <h1>Perfusion Calculations</h1>
+    <h4>- Made by Ripa Chakrabarty (NH batch of 2019)</h4>
+    <fieldset>
+        <legend><b>Enter the Following Data</b></legend>
+        <label for="ht">Height:</label>
+        <input type="number" id="ht"><br>
+
+        <label for="wt">Weight:</label>
+        <input type="number" id="wt"><br>
+
+        <label for="hct">HCT:</label>
+        <input type="number" id="hct"><br>
+
+        <label for="pv">PV:</label>
+        <input type="number" id="pv"><br>
+
+        <label for="rhct">Req HCT:</label>
+        <input type="number" id="rhct"><br>
+    </fieldset>
+  
+    <button id= "cal-but" onclick="cal()">Calculate All</button>
+    <button id= "hsize">Half sizes</button>
+    <button id= "fsize">Full sizes </button>
+ 
+  <div>
+     <table id="hs" border="1" style="display:none">
+       <title>Ring Size Table</title>
+        <tr>
+            <th>Weight</th>
+            <th>Min. Ring Size Diameter (mm)</th>
+            <th>Area (mm<sup>2</sup>)</th>
+            <th>Half Sizes (mm)</th>
+        </tr>
+        <tr>
+            <td></td>
+            <td>4</td>
+            <td>13</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>5</td>
+            <td>20</td>
+            <td></td>
+        </tr>
+      <tr>
+            <td>3</td>
+            <td>6</td>
+            <td>28</td>
+            <td>4</td>
+        </tr>
+      <tr>
+            <td>4</td>
+            <td>7</td>
+            <td>39</td>
+            <td>5</td>
+        </tr>
+      <tr>
+            <td>5</td>
+            <td>7.5</td>
+            <td>45</td>
+            <td>5.5</td>
+        </tr>
+       <tr>
+            <td>6</td>
+            <td>8</td>
+            <td>50</td>
+            <td>6</td>
+        </tr>
+      
+     <tr>
+            <td>7</td>
+            <td>9</td>
+            <td>64</td>
+            <td>6.5</td>
+        </tr>  
+      <tr>
+            <td>8</td>
+            <td>9.5</td>
+            <td>72</td>
+            <td>6.5</td>
+        </tr>
+      <tr>
+            <td>9</td>
+            <td>10</td>
+            <td>79</td>
+            <td>7</td>
+        </tr>
+      <tr>
+            <td>10</td>
+            <td>11</td>
+            <td>85</td>
+            <td>7.5</td>
+        </tr>
+      <tr>
+            <td>12</td>
+            <td>12</td>
+            <td>113</td>
+            <td>8.5</td>
+        </tr>
+      <tr>
+            <td>14</td>
+            <td>13</td>
+            <td>133</td>
+            <td>9</td>
+        </tr>
+      <tr>
+            <td>16</td>
+            <td>13.5</td>
+            <td>144</td>
+            <td>9.5 </td>
+        </tr>
+      <tr>
+            <td>18</td>
+            <td>14</td>
+            <td>154</td>
+            <td>10</td>
+        </tr>
+      <tr>
+            <td>20</td>
+            <td>15</td>
+            <td>177</td>
+            <td>11</td>
+        </tr>
+      <tr>
+            <td>25</td>
+            <td>17</td>
+            <td>227</td>
+            <td>12</td>
+        </tr>
+      <tr>
+            <td>30</td>
+            <td>18.5</td>
+            <td>270</td>
+            <td>13</td>
+        </tr>
+      <tr>
+            <td>35</td>
+            <td>20</td>
+            <td>314</td>
+            <td>14</td>
+        </tr>
+      <tr>
+            <td>40</td>
+            <td>20</td>
+            <td>314</td>
+            <td>14</td>
+       </tr>
+     </table> 
+   </div>
+  
+  <div>
+      <table id="fs" border="1" style="display:none">
+        <tr>
+            <th>BSA (m<sup>2</sup>)</th>
+            <th>MITRAL (mm)</th>
+          <th>TRICUSPID (mm)</th> 
+          <th>AORTIC (mm)</th> 
+          <th>PULMONARY (mm) </th>
+          <th>CIRCUM</th>
+        </tr>
+        <tr>
+            <td>0.25</td>
+            <td>11.2</td>
+            <td>13.4</td>
+            <td>7.2</td>
+            <td>8.4</td>
+            <td>26.3</td>
+        </tr>
+        <tr>
+            <td>0.30</td>
+            <td>12.6</td>
+            <td>14.9</td>
+            <td>8.1</td>
+            <td>9.3</td>
+            <td>29.2</td>
+        </tr>
+      <tr>
+            <td>0.35</td>
+            <td>13.6</td>
+            <td>16.2</td>
+            <td>8.9</td>
+            <td>10.1</td>
+            <td>31.7</td>
+        </tr>
+      <tr>
+           <td>0.40</td>
+            <td>14.4</td>
+            <td>17.3</td>
+            <td>9.5</td>
+            <td>10.7</td>
+            <td>33.6</td>
+        </tr>
+      <tr>
+            <td>0.45</td>
+            <td>15.2</td>
+            <td>18.2</td>
+            <td>10.1</td>
+            <td>11.3</td>
+            <td>35.4</td>
+        </tr>
+      <tr>
+            <td>0.50</td>
+            <td>15.8</td>
+            <td>19.2</td>
+            <td>10.7</td>
+            <td>11.9</td>
+            <td>37.3</td>
+        </tr>
+      
+     <tr>
+            <td>0.60</td>
+            <td>16.9</td>
+            <td>20.7</td>
+            <td>11.5</td>
+            <td>12.8</td>
+            <td>40.2</td>
+        </tr>  
+      <tr>
+            <td>0.70</td>
+            <td>17.9</td>
+            <td>21.9</td>
+            <td>12.3</td>
+            <td>13.5</td>
+            <td>42.3</td>
+        </tr>
+      <tr>
+            <td>0.80</td>
+            <td>18.8</td>
+            <td>23.0</td>
+            <td>13.0</td>
+            <td>14.2</td>
+            <td>44.6</td>
+        </tr>
+      <tr>
+            <td>0.90</td>
+            <td>19.7</td>
+            <td>24.0</td>
+            <td>13.4</td>
+            <td>14.8</td>
+            <td>46.4</td>
+        </tr>
+      <tr>
+            <td>1.0</td>
+            <td>20.2</td>
+            <td>24.9</td>
+            <td>14.0</td>
+            <td>15.3</td>
+            <td>48.0</td>
+        </tr>
+      <tr>
+            <td>1.2</td>
+            <td>21.4</td>
+            <td>26.2</td>
+            <td>14.8</td>
+            <td>16.2</td>
+            <td>50.8</td>
+        </tr>
+      <tr>
+           <td>1.4</td>
+            <td>22.3</td>
+            <td>27.7</td>
+            <td>15.5</td>
+            <td>17.0</td>
+            <td>53.3</td>
+        </tr>
+      <tr>
+            <td>1.6</td>
+            <td>23.1</td>
+            <td>28.9</td>
+            <td>16.1</td>
+            <td>17.6</td>
+            <td>55.2</td>
+        </tr>
+      <tr>
+            <td>1.8</td>
+            <td>23.8</td>
+            <td>29.1</td>
+            <td>16.5</td>
+            <td>18.2</td>
+            <td>57.4</td>
+        </tr>
+      <tr>
+           <td>2.0</td>
+            <td>24.2</td>
+            <td>30.0</td>
+            <td>17.2</td>
+            <td>18.8</td>
+            <td>59.0</td>
+        </tr>
+      
+   </table>
+  </div>
+  
+  
+    <div id="results" style="display: none;"> 
+      <ol>
+       <li>BSA = <span id="b"></span></li>
+        <li>Flows:
+          <ul>
+            <li>3.2 = <span id="l1"></span></li>
+            <li>3.0 = <span id="l2"></span></li>
+            <li>2.8 = <span id="l3"></span></li>
+            <li>2.6 = <span id="l4"></span></li>
+            <li>2.5 = <span id="l5"></span></li>
+            <li>2.4 = <span id="l6"></span></li>
+            <li>2.2 = <span id="l7"></span></li>
+            <li>2.0 = <span id="l8"></span></li>
+            <li>1.8 = <span id="l9"></span></li>
+          </li>
+        </ul>
+        <li>Plegia doses:
+        <ul>
+            <li>15ml/kg = <span id="p"></span></li>
+            <li>20ml/kg = <span id="q"></span>
+            <li>30ml/kg =<span id="r"></span></li>
+        </li>    
+        </ul>  
+        
+          <li>C<sub>2</sub>=<span id="a4"></span></li>
+          <ul>
+             <li>P<sub>1</sub>=<span id="a1"></span></li>
+             <li>P<sub>2</sub>=<span id="a2"></span></li>
+             <li>C<sub>1</sub>=<span id="a3"></span></li>
+          </ul>
+      <li>Blood req=<span id="br"></span></li>
+      <li>Plasma Vol=<span id="pl"></span></li>
+      <li>Cocp=<span id="cp"></span></li>
+      <li>Pl. add=<span id="pla"></span></li>
+        </ol>
+</div>
+<script>
+        function cal() {
+            var ht = parseFloat(document.getElementById("ht").value);
+            var wt = parseFloat(document.getElementById("wt").value);
+            var hct = parseFloat(document.getElementById("hct").value);
+            var pv = parseInt(document.getElementById("pv").value);
+            var rhct = parseFloat(document.getElementById("rhct").value);
+
+            var bsa =Math.sqrt((ht*wt)/3600);
+          
+           	if(wt<5)
+					           p1=wt*85;
+           		else if(wt>=5 && wt<=10)
+            			p1=wt*80;
+           		else if(wt>=10 && wt<=20)
+            			p1=wt*75;
+           		else if(wt>=20 && wt<=30)
+           			p1=wt*70;
+            		else if(wt>=30 && wt<=40)
+            			p1=wt*65;
+            		else
+            			p1=wt*60;
+            		
+            	p2=p1+pv;
+            		plv=(p1*(100-hct))/100;
+            		  
+           
+                
+            document.getElementById("b").textContent =bsa;
+            document.getElementById("l1").textContent = 3.2*bsa;
+            document.getElementById("l2").textContent = 3.0*bsa;
+            document.getElementById("l3").textContent = 2.8*bsa;
+            document.getElementById("l4").textContent = 2.6*bsa;
+            document.getElementById("l5").textContent = 2.5*bsa;
+            document.getElementById("l6").textContent = 2.4*bsa;
+            document.getElementById("l7").textContent = 2.2*bsa;
+            document.getElementById("l8").textContent = 2*bsa;
+            document.getElementById("l9").textContent = 1.8*bsa;
+            document.getElementById("p").textContent = wt*15;
+            document.getElementById("q").textContent = wt*20;
+            document.getElementById("r").textContent = wt*30;
+            	document.getElementById("a1").textContent = p1;	  
+            document.getElementById("a2").textContent = p2; 		
+            document.getElementById("a3").textContent = hct; 
+            document.getElementById("a4").textContent = (p1*hct)/p2;	  
+            document.getElementById("br").textContent = p1-((rhct*p2)/hct);
+            	document.getElementById("pl").textContent = plv;
+            		document.getElementById("cp").textContent = (plv*25)/(plv+pv);	 
+            		document.getElementById("pla").textContent = plv- ((15*(plv+pv))/25);
+            		  
+            var		rd=document.getElementById("results");
+            	rd.style.display = "block"	 ; 
+            		  	        		  
+           		  
+        }
+      
+      const toggleButton = document.getElementById("hsize");
+        const hs = document.getElementById("hs");
+      
+        toggleButton.addEventListener('click', function() 
+             {
+               if (hs.style.display === 'none') 
+                {
+                hs.style.display = 'table';
+                toggleButton.textContent = 'Hide half sizes';
+                }
+               else
+               {
+                hs.style.display = 'none'; 
+                toggleButton.textContent = 'Half sizes';
+               }  
+             });
+      
+      const toggleButton1 = document.getElementById("fsize");
+        const fs = document.getElementById("fs");
+      
+        toggleButton1.addEventListener('click', function() 
+             {
+               if (fs.style.display === 'none') 
+                {
+                fs.style.display = 'table';
+                toggleButton1.textContent = 'Hide full sizes';
+                }
+               else
+               {
+                fs.style.display = 'none'; 
+                toggleButton1.textContent = 'Full sizes';
+               }  
+             });
+      
+      
+      
+    </script>
+<body>
